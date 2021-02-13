@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components/macro";
 import { Avatar } from "@material-ui/core";
-import { Timestamp, Badge } from "../Styles/UI";
+import { Timestamp, Badge } from "../../UI";
 
 const Thread = styled((props) => (
   <div className={props.className}>
@@ -21,7 +21,7 @@ const Thread = styled((props) => (
   ${({ theme }) => theme.flex.row(1)}
   background: ${({ theme }) => theme.color.bg[2]};
   border-radius: 0.75rem;
-  padding: 1rem 1rem;
+  padding: 1rem;
   align-items: center;
   transition: all 0.25s ease-in-out;
   cursor: pointer;

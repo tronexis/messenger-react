@@ -21,7 +21,7 @@ const Nav = (props) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.nav`
   display: flex;
   flex-direction: column;
   flex: 1;

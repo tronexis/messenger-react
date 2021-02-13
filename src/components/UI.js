@@ -18,4 +18,23 @@ export const Badge = styled((props) => (
 
 export const Timestamp = styled.small`
   color: ${({ theme }) => theme.color.font[2]};
+  text-align: right;
+`;
+
+export const Title = styled.h2`
+  margin-block: 0;
+  margin-right: 0.8rem;
+  padding-bottom: 0.5rem;
+`;
+
+export const BadgedTitle = styled(({ className, title, count, ...props }) => (
+  <div className={className}>
+    <Title>{title}</Title>
+    <Badge size="3">{count}</Badge>
+  </div>
+))`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #fff;
 `;

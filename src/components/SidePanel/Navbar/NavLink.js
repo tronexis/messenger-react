@@ -1,6 +1,6 @@
 import React from "react";
 import { Badge, Button, withStyles } from "@material-ui/core";
-import * as $ from "./../Styles/Styles";
+import * as $ from "../../Styles";
 
 const NavLink = ({ Icon, badge, ...rest }) => {
   return (

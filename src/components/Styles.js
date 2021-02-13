@@ -12,7 +12,7 @@ export const Box = styled.div`
   background: ${({ nobg }) => (nobg && "#fff0") || "#fff1"};
   border-radius: 1rem;
   color: #000;
-  width: ${(props) => props.w || "95%"};
+  width: ${(props) => props.w || "100%"};
   ${(props) => props.wmax && `max-width: ${props.wmax};`}
   margin: 0.5rem;
   flex: ${(props) => props.flex || 0};
@@ -28,10 +28,10 @@ export const Box = styled.div`
   }
 `;
 
-export const Boxes = ({ x, Box }) =>
-  Array(x)
+export const Boxes = ({ x, content }) =>
+  Array(parseInt(x))
     .fill(0)
-    .map((_, i) => <Box key={i} />);
+    .map((_, i) => <Box key={i}>{content}</Box>);
 
 export const Flex = css`
   display: flex;
@@ -42,7 +42,7 @@ export const container = css`
 `;
 
 export const colSpacing = (x) => css`
-  & > div {
+  & > * {
     margin: 0;
     margin-bottom: ${x}rem;
 
@@ -53,7 +53,7 @@ export const colSpacing = (x) => css`
 `;
 
 export const rowSpacing = (x) => css`
-  & > div {
+  & > * {
     margin: 0;
     margin-right: ${x}rem;
 
@@ -92,15 +92,74 @@ export const fullflex = css`
   flex: 1;
 `;
 
-export const col = (x) => css`
+const borderSize = "0.1";
+
+export const col = (space, border) => css`
   display: flex;
   flex-direction: column;
-  ${colSpacing(x)}
+
+  & > * {
+    margin: 0;
+    border-bottom: ${border ? borderSize : 0}rem solid ${tint(0.1)};
+    margin-bottom: ${space}rem;
+
+    &:last-child {
+      border: 0;
+      margin: 0;
+    }
+  }
 `;
 
-export const row = (x) => css`
+export const colReverse = (space, border) => css`
   display: flex;
-  ${rowSpacing(x)}
+  flex-direction: column-reverse;
+
+  & > * {
+    margin: 0;
+    border-bottom: ${border ? borderSize : 0}rem solid ${tint(0.1)};
+    margin-bottom: ${space}rem;
+
+    &:first-child {
+      border: 0;
+      margin: 0;
+    }
+
+    &:last-child {
+      border: 0;
+      margin-top: ${space}rem;
+    }
+  }
+`;
+
+export const row = (space, border) => css`
+  display: flex;
+
+  & > * {
+    margin: 0;
+    border-right: ${border ? borderSize : 0}rem solid ${tint(0.1)};
+    margin-right: ${space}rem;
+
+    &:last-child {
+      border: 0;
+      margin: 0;
+    }
+  }
+`;
+
+export const rowReverse = (space, border) => css`
+  display: flex;
+  flex-direction: row-reverse;
+
+  & > * {
+    margin: 0;
+    border-right: ${border ? borderSize : 0}rem solid ${tint(0.1)};
+    margin-right: ${space}rem;
+
+    &:first-child {
+      border: 0;
+      margin: 0;
+    }
+  }
 `;
 
 export const theme = {
@@ -109,14 +168,14 @@ export const theme = {
     2: bgColor,
     font: {
       1: "#fff",
-      2: tint(0.3),
+      2: tint(0.4),
     },
     bg: {
       1: bgColor,
       2: lighten(0.05),
     },
     icon: {
-      1: lighten(0.25),
+      1: lighten(0.35),
       2: tint(0.3),
     },
     badge: {
@@ -139,7 +198,53 @@ export const theme = {
       justify-content: center;
     `,
     full: fullflex,
-    col: (x) => col(x),
-    row: (x) => row(x),
+    col: (...args) => col(...args),
+    colReverse: (...args) => colReverse(...args),
+    row: (...args) => row(...args),
+    rowReverse: (...args) => rowReverse(...args),
   },
 };
+
+theme["text"] = {
+  title: css`
+    margin-block: 0;
+    color: ${theme.color.font[1]};
+  `,
+  subtitle: css`
+    margin-block: 0;
+    color: ${theme.color.font[2]};
+  `,
+};
+
+theme["btn"] = {
+  icon: css`
+    ${({ theme }) => theme.flex.center}
+    color: ${({ theme }) => theme.color.icon[1]};
+    font-weight: 600;
+    font-size: 1.5rem;
+    background: none;
+    padding: 0;
+    border: 0;
+    transition: all 0.25s ease-in-out;
+    cursor: pointer;
+    &:hover {
+      color: ${({ theme }) => theme.color.font[1]};
+    }
+  `,
+};
+
+theme["input"] = css`
+  display: flex;
+  flex: 1;
+  background: none;
+  color: ${({ theme }) => theme.color.font[1]};
+  border: 0;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:placeholder {
+    color: ${({ theme }) => theme.color.font[2]};
+  }
+`;
